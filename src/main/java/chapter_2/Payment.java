@@ -3,7 +3,9 @@ package chapter_2;
 import chapter_1.CreditCard;
 import model.Tuple;
 
-import java.util.List;
+import model.List;
+
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -86,4 +88,5 @@ public class Payment {
     }
 
     final Function<Integer, Integer> factorial = a -> a <= 1 ? 1 : a * this.factorial.apply(a - 1);
+
 }
