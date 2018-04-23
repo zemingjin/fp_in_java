@@ -4,8 +4,8 @@ import venkat.tailcall.TailCall;
 
 import static venkat.tailcall.TailCalls.*;
 
-public class Factorial {
-    public static int factorialTailRec(final int number) {
+class Factorial {
+    static int factorialTailRec(final int number) {
         return factorialTailRec(1, number).invoke();
     }
 

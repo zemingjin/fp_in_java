@@ -7,16 +7,16 @@ import java.math.BigInteger;
 import static venkat.tailcall.TailCalls.call;
 import static venkat.tailcall.TailCalls.done;
 
-public class BigFactorial {
-    public static BigInteger decrement(final BigInteger number) {
+class BigFactorial {
+    private static BigInteger decrement(final BigInteger number) {
         return number.subtract(BigInteger.ONE);
     }
 
-    public static BigInteger multiply(final BigInteger first, final BigInteger second) {
+    private static BigInteger multiply(final BigInteger first, final BigInteger second) {
         return first.multiply(second);
     }
 
-    public static BigInteger factorial(final BigInteger number) {
+    static BigInteger factorial(final BigInteger number) {
         return factorialTailRec(BigInteger.ONE, number).invoke();
     }
 
