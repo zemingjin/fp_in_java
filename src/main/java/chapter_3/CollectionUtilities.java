@@ -22,14 +22,14 @@ public class CollectionUtilities {
     }
 
     // Exercise 3.4
-    static <T> T head(List<T> list) {
+    public static <T> T head(List<T> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("head of empty list");
         }
         return list.get(0);
     }
 
-    static <T> List<T> tail(List<T> list) {
+    public static <T> List<T> tail(List<T> list) {
         if (list.isEmpty()) {
             throw new IllegalStateException("head of empty list");
         }
@@ -38,7 +38,7 @@ public class CollectionUtilities {
         return Collections.unmodifiableList(copy);
     }
 
-    static <T> List<T> append(List<T> list, T t) {
+    public static <T> List<T> append(List<T> list, T t) {
         List<T> ts = copy(list);
         ts.add(t);
         return Collections.unmodifiableList(ts);
@@ -63,24 +63,24 @@ public class CollectionUtilities {
     }
 
     // Exercise 3.9
-    static <T> List<T> reverse(List<T> list) {
+    public static <T> List<T> reverse(List<T> list) {
         return foldRight(list, Collections.emptyList(), x -> y -> append(y, x));
     }
 
-    static <T> List<T> reverseViLeftFold(List<T> list) {
+    public static <T> List<T> reverseViLeftFold(List<T> list) {
         return foldLeft(list, list(), x -> y -> foldLeft(x, list(y), a -> b -> append(a, b)));
     }
 
     // Exercise 3.10
-    static <T, U> List<U> mapViaFoldLeft(List<T> list, Function<T, U> f) {
+    public static <T, U> List<U> mapViaFoldLeft(List<T> list, Function<T, U> f) {
         return foldLeft(list, list(), x -> y -> append(x, f.apply(y)));
     }
 
-    static <T, U> List<U> mapViaFoldRight(List<T> list, Function<T, U> f) {
+    public static <T, U> List<U> mapViaFoldRight(List<T> list, Function<T, U> f) {
         return foldRight(reverse(list), list(), x -> y -> append(y, f.apply(x)));
     }
 
-    static List<Integer> range(int start, int end) {
+    public static List<Integer> range(int start, int end) {
         return unfold(Collections.emptyList(), start, a -> a + 1, a -> a < end);
     }
 
