@@ -90,4 +90,25 @@ public class CollectionUtilities {
         }
         return acc;
     }
+
+    public static <T, U> List<U> map(List<T> list, Function<T, U> f) {
+        return map_(list, f, list());
+    }
+
+    private static <T, U> List<U> map_(List<T> list, Function<T, U> f, List<U> acc) {
+        return list.isEmpty()
+               ? acc
+               : map_(tail(list), f, append(acc, f.apply(head(list))));
+    }
+
+    public static <B> List<B> iterate(B seed, Function<B, B> f, int n) {
+        return iterate_(seed, f, n, list());
+    }
+
+    private static <B> List<B> iterate_(B seed, Function<B, B> f, int n, List<B> acc) {
+        return n <= 0
+               ? acc
+               : iterate_(f.apply(seed), f, n - 1, append(acc, seed));
+    }
+
 }

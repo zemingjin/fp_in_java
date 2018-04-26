@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import static chapter_3.CollectionUtilities.*;
 
@@ -52,6 +54,20 @@ public class Chapter4Test {
         assertEquals(500, (int)Chapter4.composeAll(mapViaFoldLeft(range(0, 500), x -> add)).apply(0));
         assertEquals(500, (int)Chapter4.composeAllViaFoldLeft(mapViaFoldLeft(range(0, 500), x -> add)).apply(0));
         assertEquals(500, (int)Chapter4.composeAllViaFoldRighty(mapViaFoldLeft(range(0, 500), x -> add)).apply(0));
+    }
+
+    @Test
+    public void testFibo() {
+        assertEquals("0, 1, 1, 2, 3, 5", Chapter4.fibo(5));
+        assertEquals("0, 1, 1, 2, 3, 5", Chapter4.fiboViaRec(5));
+        assertEquals("0, 1, 1, 2, 3, 5", Chapter4.fiboCorecursive(5));
+    }
+
+    @Test
+    public void testMemoization() {
+        Map<Integer, Integer> cache = new ConcurrentHashMap<>();
+        Function<Integer, Integer> doubleValue = x -> cache.computeIfAbsent(x, y -> y * 2);
+
     }
 
     private <T, U> String addAS(T x, U y) {
