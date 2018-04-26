@@ -1,17 +1,15 @@
 package chapter_4;
 
 import chapter_3.CollectionUtilities;
+import common.TailCall;
 import model.Tuple;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Function;
 
-import static chapter_4.TailCall.ret;
-import static chapter_4.TailCall.sus;
-import static chapter_3.CollectionUtilities.*;
+import static common.TailCall.ret;
+import static common.TailCall.sus;
 
 
 class Chapter4 extends CollectionUtilities {

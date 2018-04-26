@@ -1,10 +1,9 @@
 package chapter_4;
 
+import common.Memoizer;
 import org.junit.Test;
 
 import java.util.function.Function;
-
-import static org.junit.Assert.*;
 
 public class MemoizerTest {
     private static Integer longCalculation(Integer x) {

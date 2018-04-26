@@ -1,10 +1,10 @@
 package chapter_5;
 
-import chapter_4.TailCall;
+import common.TailCall;
 
 import java.util.function.Function;
 
-import static chapter_4.TailCall.*;
+import static common.TailCall.*;
 
 public abstract class List<A> {
     public abstract A head();

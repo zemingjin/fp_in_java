@@ -1,4 +1,4 @@
-package chapter_4;
+package common;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

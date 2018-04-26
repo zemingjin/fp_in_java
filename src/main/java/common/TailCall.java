@@ -1,4 +1,4 @@
-package chapter_4;
+package common;
 
 import java.util.function.Supplier;
 
