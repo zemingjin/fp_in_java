@@ -5,6 +5,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 class Dates {
     static final DateFormat DDF = new SimpleDateFormat("M/d/yy");
@@ -15,24 +17,23 @@ class Dates {
     private static final int DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
 
     static Date getPublishDate(String[] elements) throws ParseException {
-        if (isEvent(elements)) {
-            return null;
-        }
-        return previousDate(SDF.parse(elements[DATE]));
+        return getDate(elements, () -> null, Dates::previousDate);
     }
 
     static String getChallengeDate(String[] elements) throws ParseException {
-        if (isEvent(elements)) {
-            return LDF.format(new Date());
-        }
-        return LDF.format(SDF.parse(elements[DATE]));
+        return getDate(elements, () -> LDF.format(new Date()), LDF::format);
     }
 
     static String getChallengeDateForDesc(String[] elements) throws ParseException {
+        return getDate(elements, () -> DDF.format(new Date()), DDF::format);
+    }
+
+    private static <A> A getDate(String[] elements, Supplier<A> eventDate, Function<Date, A> otherDate)
+            throws ParseException {
         if (isEvent(elements)) {
-            return DDF.format(new Date());
+            return eventDate.get();
         }
-        return DDF.format(SDF.parse(elements[DATE]));
+        return otherDate.apply(SDF.parse(elements[DATE]));
     }
 
     private static boolean isEvent(String[] elements) {
