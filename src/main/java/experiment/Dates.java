@@ -38,11 +38,11 @@ class Dates {
         return otherDate.apply(LocalDate.parse(elements[DATE], SDF));
     }
 
-    private static boolean isEvent(String[] elements) {
-        return elements.length > 0 && elements[0].startsWith("Event");
-    }
-
     private static LocalDateTime previousDate(LocalDate date) {
          return date.minusDays(1).atTime(PUB_HOUR, PUB_MINUTE);
+    }
+
+    private static boolean isEvent(String[] elements) {
+        return elements.length > 0 && elements[0].startsWith("Event");
     }
 }
