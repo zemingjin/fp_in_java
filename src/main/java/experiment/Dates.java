@@ -3,34 +3,34 @@ package experiment;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.function.Function;
-import java.util.function.Supplier;
 
 class Dates {
     private static final int DATE = 1;
     private static final int PUBLISH_HOUR = 12;
     private static final int PUBLISH_MINUTE = 0;
-    private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
     static final DateTimeFormatter DDF = DateTimeFormatter.ofPattern("M/d/yy");
+    private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
     static final DateTimeFormatter LDF = DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
     static LocalDateTime getPublishDate(String[] elements) {
-        return getDate(elements, () -> null, Dates::previousDate);
-    }
-
-    static String getChallengeDate(String[] elements) {
-        return getDate(elements, () -> LocalDate.now().format(LDF), LDF::format);
-    }
-
-    static String getChallengeDateForDesc(String[] elements) {
-        return getDate(elements, () -> LocalDate.now().format(DDF), DDF::format);
-    }
-
-    private static <A> A getDate(String[] elements, Supplier<A> eventDate, Function<LocalDate, A> otherDate) {
         if (isEvent(elements)) {
-            return eventDate.get();
+            return null;
         }
-        return otherDate.apply(LocalDate.parse(elements[DATE], SDF));
+        return previousDate(LocalDate.parse(elements[DATE], SDF));
+    }
+
+    static String getCampaignDate(String[] elements) {
+        if (isEvent(elements)) {
+            return LocalDate.now().format(LDF);
+        }
+        return LocalDate.parse(elements[DATE], SDF).format(LDF);
+    }
+
+    static String getCampaignDateForDesc(String[] elements) {
+        if (isEvent(elements)) {
+            return LocalDate.now().format(DDF);
+        }
+        return LocalDate.parse(elements[DATE], SDF).format(DDF);
     }
 
     private static boolean isEvent(String[] elements) {

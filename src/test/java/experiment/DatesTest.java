@@ -21,14 +21,14 @@ public class DatesTest {
     }
 
     @Test
-    public void testGetChallengeDate() {
-        assertEquals("December 31, 2018", Dates.getChallengeDate(mockElements));
-        assertEquals(today_l, Dates.getChallengeDate(mockEvent));
+    public void testCampaignDateDate() {
+        assertEquals("December 31, 2018", Dates.getCampaignDate(mockElements));
+        assertEquals(today_l, Dates.getCampaignDate(mockEvent));
     }
 
     @Test
-    public void testGetChallengeDateForDesc() {
-        assertEquals("12/31/18", Dates.getChallengeDateForDesc(mockElements));
-        assertEquals(today_s, Dates.getChallengeDateForDesc(mockEvent));
+    public void testCampaignDateForDesc() {
+        assertEquals("12/31/18", Dates.getCampaignDateForDesc(mockElements));
+        assertEquals(today_s, Dates.getCampaignDateForDesc(mockEvent));
     }
 }
