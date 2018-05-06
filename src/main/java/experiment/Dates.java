@@ -13,12 +13,14 @@ class Dates {
     static final DateTimeFormatter DDF = DateTimeFormatter.ofPattern("M/d/yy");
     private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
     static final DateTimeFormatter LDF = DateTimeFormatter.ofPattern("MMMM d, yyyy");
+    private static final Supplier<LocalDateTime> NULL = () -> null;
+
     private static Supplier<String> today(DateTimeFormatter fmt) {
         return () -> LocalDate.now().format(fmt);
     }
 
     static LocalDateTime getPublishDate(String[] elements) {
-        return getDate(elements, () -> null, Dates::previousDate);
+        return getDate(elements, NULL, Dates::previousDate);
     }
 
     static String getCampaignDate(String[] elements) {
