@@ -7,24 +7,26 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 class Dates {
-    private static final int DATE = 1;
+    private static final int DATE = 3;
     private static final int PUBLISH_HOUR = 12;
     private static final int PUBLISH_MINUTE = 0;
     static final DateTimeFormatter DDF = DateTimeFormatter.ofPattern("M/d/yy");
     private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
     static final DateTimeFormatter LDF = DateTimeFormatter.ofPattern("MMMM d, yyyy");
-    private static final Function<DateTimeFormatter, Supplier<String>> today = fmt -> () -> LocalDate.now().format(fmt);
+    private static Supplier<String> today(DateTimeFormatter fmt) {
+        return () -> LocalDate.now().format(fmt);
+    }
 
     static LocalDateTime getPublishDate(String[] elements) {
         return getDate(elements, () -> null, Dates::previousDate);
     }
 
     static String getCampaignDate(String[] elements) {
-        return getDate(elements, today.apply(LDF), LDF::format);
+        return getDate(elements, today(LDF), LDF::format);
     }
 
     static String getCampaignDateForDesc(String[] elements) {
-        return getDate(elements, today.apply(DDF), DDF::format);
+        return getDate(elements, today(DDF), DDF::format);
     }
 
     private static <A> A getDate(String[] elements, Supplier<A> eventDate, Function<LocalDate, A> otherDate) {

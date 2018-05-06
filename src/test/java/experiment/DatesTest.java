@@ -8,8 +8,8 @@ import java.util.Optional;
 import static org.junit.Assert.*;
 
 public class DatesTest {
-    private static final String[] mockElements = {"abc", "123118"};
-    private static final String[] mockEvent = {"Event", "123118"};
+    private static final String[] mockElements = {"abc", "", "", "123118"};
+    private static final String[] mockEvent = {"Event", "", "", "123118"};
     private static final String today_l = Dates.LDF.format(LocalDate.now());
     private static final String today_s = Dates.DDF.format(LocalDate.now());
 
