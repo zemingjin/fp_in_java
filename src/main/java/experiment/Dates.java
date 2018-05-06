@@ -1,53 +1,43 @@
 package experiment;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 class Dates {
-    static final DateFormat DDF = new SimpleDateFormat("M/d/yy");
-    private static final DateFormat SDF = new SimpleDateFormat("MMddyy");
-    static final DateFormat LDF = new SimpleDateFormat("MMMM d, yyyy");
     private static final int DATE = 1;
-    private static final int PUBLISH_TIME = 12;
-    private static final int DAY_IN_MILLIS = 24 * 60 * 60 * 1000;
+    private static final int PUBLISH_HOUR = 12;
+    private static final int PUBLISH_MINUTE = 0;
+    static final DateTimeFormatter DDF = DateTimeFormatter.ofPattern("M/d/yy");
+    private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
+    static final DateTimeFormatter LDF = DateTimeFormatter.ofPattern("MMMM d, yyyy");
 
-    static Date getPublishDate(String[] elements) throws ParseException {
-        return getDate(elements, () -> null, Dates::previousDate);
-    }
-
-    static String getChallengeDate(String[] elements) throws ParseException {
-        return getDate(elements, () -> LDF.format(new Date()), LDF::format);
-    }
-
-    static String getChallengeDateForDesc(String[] elements) throws ParseException {
-        return getDate(elements, () -> DDF.format(new Date()), DDF::format);
-    }
-
-    private static <A> A getDate(String[] elements, Supplier<A> eventDate, Function<Date, A> otherDate)
-            throws ParseException {
+    static LocalDateTime getPublishDate(String[] elements) {
         if (isEvent(elements)) {
-            return eventDate.get();
+            return null;
         }
-        return otherDate.apply(SDF.parse(elements[DATE]));
+        return previousDate(LocalDate.parse(elements[DATE], SDF));
+    }
+
+    static String getChallengeDate(String[] elements) {
+        if (isEvent(elements)) {
+            return LocalDate.now().format(LDF);
+        }
+        return LDF.format(LocalDate.parse(elements[DATE], SDF));
+    }
+
+    static String getChallengeDateForDesc(String[] elements) {
+        if (isEvent(elements)) {
+            return LocalDate.now().format(DDF);
+        }
+        return DDF.format(LocalDate.parse(elements[DATE], SDF));
     }
 
     private static boolean isEvent(String[] elements) {
         return elements.length > 0 && elements[0].startsWith("Event");
     }
 
-    private static Date previousDate(Date date) {
-        Calendar calendar = Calendar.getInstance();
-
-        calendar.setTime(new Date(date.getTime() - DAY_IN_MILLIS));
-        calendar.set(Calendar.HOUR_OF_DAY, PUBLISH_TIME);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar.getTime();
+    private static LocalDateTime previousDate(LocalDate date) {
+         return date.minusDays(1).atTime(PUBLISH_HOUR, PUBLISH_MINUTE);
     }
 }
