@@ -8,8 +8,8 @@ import java.util.function.Supplier;
 
 class Dates {
     private static final int DATE = 3;
-    private static final int PUBLISH_HOUR = 12;
-    private static final int PUBLISH_MINUTE = 0;
+    private static final int PUB_HOUR = 12;
+    private static final int PUB_MINUTE = 0;
     static final DateTimeFormatter DDF = DateTimeFormatter.ofPattern("M/d/yy");
     private static final DateTimeFormatter SDF = DateTimeFormatter.ofPattern("MMddyy");
     static final DateTimeFormatter LDF = DateTimeFormatter.ofPattern("MMMM d, yyyy");
@@ -43,6 +43,6 @@ class Dates {
     }
 
     private static LocalDateTime previousDate(LocalDate date) {
-         return date.minusDays(1).atTime(PUBLISH_HOUR, PUBLISH_MINUTE);
+         return date.minusDays(1).atTime(PUB_HOUR, PUB_MINUTE);
     }
 }
