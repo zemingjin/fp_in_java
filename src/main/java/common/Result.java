@@ -5,16 +5,47 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public abstract class Result<V> implements Serializable {
+    private static Result empty = new Empty();
+
     private Result() {
     }
 
     public abstract V getOrElse(final V defaultValue);
+
     public abstract V getOrElse(final Supplier<V> defaultValue);
+
     public abstract <U> Result<U> map(Function<V, U> f);
+
     public abstract <U> Result<U> flatMap(Function<V, Result<U>> f);
 
     public Result<V> orElse(Supplier<Result<V>> defaultValue) {
         return map(x -> this).getOrElse(defaultValue);
+    }
+
+    private static class Empty<V> extends Result<V> {
+        public Empty() {
+            super();
+        }
+        @Override
+        public V getOrElse(final V defaultValue) {
+            return defaultValue;
+        }
+        @Override
+        public <U> Result<U> map(Function<V, U> f) {
+            return empty();
+        }
+        @Override
+        public <U> Result<U> flatMap(Function<V, Result<U>> f) {
+            return empty();
+        }
+        @Override
+        public String toString() {
+            return "Empty()";
+        }
+        @Override
+        public V getOrElse(Supplier<V> defaultValue) {
+            return defaultValue.get();
+        }
     }
 
     private static class Failure<V> extends Result<V> {
@@ -59,6 +90,7 @@ public abstract class Result<V> implements Serializable {
         public <U> Result<U> flatMap(Function<V, Result<U>> f) {
             return failure(exception);
         }
+
     }
 
     private static class Success<V> extends Result<V> {
@@ -101,6 +133,7 @@ public abstract class Result<V> implements Serializable {
                 return failure(ex);
             }
         }
+
     }
 
     public static <V> Result<V> failure(String message) {
@@ -118,5 +151,9 @@ public abstract class Result<V> implements Serializable {
 
     public static <V> Result<V> success(V value) {
         return new Success<>(value);
+    }
+
+    public static <V> Result<V> empty() {
+        return empty;
     }
 }
