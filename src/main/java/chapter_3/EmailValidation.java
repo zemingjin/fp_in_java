@@ -4,8 +4,6 @@ import model.Function;
 
 import java.util.regex.Pattern;
 
-import static chapter_3.Case.*;
-
 public class EmailValidation {
     private static Pattern emailPattern = Pattern.compile("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$");
     private static Function<String, Result> emailChecker = s ->
@@ -34,7 +32,7 @@ public class EmailValidation {
 
     private static Executable validate(String s) {
         Result result = emailChecker.apply(s);
-        return (result instanceof Result.Success)
+        return result instanceof Result.Success
                 ? () -> sendVerificationMail(s)
                 : () -> logError(((Result.Failure)result).getMessage());
     }

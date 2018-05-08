@@ -1,7 +1,5 @@
 package chapter_6;
 
-import sun.plugin.dom.exception.InvalidStateException;
-
 import java.util.function.Function;
 import java.util.function.Supplier;
 

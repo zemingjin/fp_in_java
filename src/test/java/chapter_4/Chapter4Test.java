@@ -68,6 +68,7 @@ public class Chapter4Test {
         Map<Integer, Integer> cache = new ConcurrentHashMap<>();
         Function<Integer, Integer> doubleValue = x -> cache.computeIfAbsent(x, y -> y * 2);
 
+        assertNotNull(doubleValue);
     }
 
     private <T, U> String addAS(T x, U y) {

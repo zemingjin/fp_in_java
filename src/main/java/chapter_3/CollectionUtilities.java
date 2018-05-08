@@ -34,7 +34,7 @@ public class CollectionUtilities {
             throw new IllegalStateException("head of empty list");
         }
         List<T> copy = copy(list);
-        copy.remove((0));
+        copy.remove(0);
         return Collections.unmodifiableList(copy);
     }
 

@@ -1,6 +1,5 @@
 package chapter_6;
 
-
 import chapter_5.List;
 import static chapter_6.Option.*;
 
@@ -10,7 +9,7 @@ public class Chapter6 {
     public static <A extends Comparable<A>> Function<List<A>, Option<A>> max() {
         return xs -> xs.isEmpty()
                 ? NONE
-                : Option.some(xs.foldLeft(xs.head(), x -> y -> x.compareTo(y) > 0 ? x : y));
+                : some(xs.foldLeft(xs.head(), x -> y -> x.compareTo(y) > 0 ? x : y));
     }
 
 
@@ -18,8 +17,8 @@ public class Chapter6 {
 
     static Function<List<Double>, Option<Double>> mean =
             ds -> ds.isEmpty()
-                    ? Option.none()
-                    : Option.some(sum.apply(ds) / ds.length());
+                    ? none()
+                    : some(sum.apply(ds) / ds.length());
 
     static Function<List<Double>, Option<Double>> variance =
             ds -> mean.apply(ds).flatMap(m -> mean.apply(ds.map(x -> Math.pow(x - m, 2))));
