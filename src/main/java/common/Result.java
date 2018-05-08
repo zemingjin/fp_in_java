@@ -2,6 +2,7 @@ package common;
 
 import java.io.Serializable;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public abstract class Result<V> implements Serializable {
@@ -20,6 +21,18 @@ public abstract class Result<V> implements Serializable {
 
     public Result<V> orElse(Supplier<Result<V>> defaultValue) {
         return map(x -> this).getOrElse(defaultValue);
+    }
+
+    public Result<V> filter(Predicate<V> rule) {
+        return filter(rule, "Condition not matched");
+    }
+
+    public Result<V> filter(Predicate<V> rule, String message) {
+        return flatMap(x -> rule.test(x) ? this : failure(message));
+    }
+
+    public boolean exists(Function<V, Boolean> p) {
+        return map(p).getOrElse(false);
     }
 
     private static class Empty<V> extends Result<V> {
